@@ -1,6 +1,7 @@
+import { TaskService } from './../../../shared/providers/task.service';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Todo } from 'src/app/shared/models/todo.model';
+import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -9,29 +10,78 @@ import { Todo } from 'src/app/shared/models/todo.model';
 })
 export class TasksComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: TaskService) { }
+
+  form: FormGroup;
+  public mode = 'list';
+  tasks: Task[];
+  task: Task;
+  public title = 'Lista de Tarefas';
+
+  ngOnInit() {
+    this.buildForm();
+    this.loadPage();
+  }
+
+  buildForm() {
     this.form = this.fb.group({
-      title: ['', Validators.compose([
+      task: ['', Validators.compose([
         Validators.minLength(3),
         Validators.maxLength(60),
         Validators.required
-      ])]
+      ])],
+      done: [false]
     });
-    this.load();
   }
 
-  public mode = 'list';
-  public todos: Todo[] = [];
-  public title = 'Lista de Tarefas';
-  public form: FormGroup;
+  loadForm(task: Task){
+    this.form.patchValue({
+      task: task.task,
+      done: task.done
+    });
+  }
 
-  ngOnInit() {
+  loadPage() {
+    this.service.getTask().subscribe(
+      response => {
+        this.tasks = response;
+      },
+      error => {
+        console.error(error);
+      });
+  }
+
+  save() {
+    debugger;
+    this.fillTask();
+    this.service.createTask(this.task).subscribe(
+      response => {
+        this.loadPage();
+      },
+      error => {
+        console.error(error);
+      });
+  }
+
+  fillTask() {
+    if (this.task === undefined) {
+      this.task = new Task();
+    }
+    this.task.task = this.form.controls.task.value;
+    this.task.done = this.form.controls.done.value;
+  }
+
+  remove(task: Task) {
+    this.service.deleteTask(task.id).subscribe(
+      response => {
+        this.loadPage();
+      },
+      error => {
+        console.error(error);
+      });
   }
 
   add() {
-    const title = this.form.controls.title.value;
-    const id = this.todos.length + 1;
-    this.todos.push(new Todo(id, title, false));
     this.save();
     this.clear();
   }
@@ -40,37 +90,14 @@ export class TasksComponent implements OnInit {
     this.form.reset();
   }
 
-  remove(todo: Todo) {
-    const index = this.todos.indexOf(todo);
-    if (index !== -1) {
-      this.todos.splice(index, 1);
-    }
-    this.save();
-  }
-
-  markAsDone(todo: Todo) {
+  markAsDone(todo: Task) {
     todo.done = true;
     this.save();
   }
 
-  markAsUndone(todo: Todo) {
+  markAsUndone(todo: Task) {
     todo.done = false;
     this.save();
-  }
-
-  save() {
-    const data = JSON.stringify(this.todos);
-    localStorage.setItem('todos', data);
-    this.mode = 'list';
-  }
-
-  load() {
-    const data = localStorage.getItem('todos');
-    if (data) {
-      this.todos = JSON.parse(data);
-    } else {
-      this.todos = [];
-    }
   }
 
   changeMode(mode: string) {
