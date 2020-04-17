@@ -1,18 +1,4 @@
-<h1 class="title animated jackInTheBox">{{ title }}</h1>
-<ul class="animated flipInX" *ngIf="mode=='list'">
-    <p class="text-center" *ngIf="tasks == null">
-        <small>Você não tem nenhuma tarefa hoje!</small>
-    </p>
-    <li *ngFor="let task of tasks">
-        {{ task.task }}
-        <button (click)="remove(task)"><i class="far fa-trash-alt"></i></button>
-        <button *ngIf="!task.done" (click)="markAsDone(task)"><i class="far fa-check-circle"></i></button>
-        <button *ngIf="task.done" (click)="markAsUndone(task)"><i class="fas fa-check-circle"></i></button>
-    </li>
-</ul>
-
-<div id="modal" *ngIf="mode=='add'" class="animated flipInX">
-    <h1 class="text-center">Nova Tarefa</h1>
+<div id="modal" class="animated flipInX">
     <form [formGroup]= "form" (ngSubmit)="save()">
         <input type="text" placeholder="Descrição da tarefa" maxlength="60" formControlName="task">
         <small class="danger" *ngIf="form.controls.task.invalid && !form.controls.task.pristine">
@@ -23,11 +9,7 @@
     </form>
 </div>
 
-<button class="add-button anitamed fadeInUp button" (click)="changeMode('add')" *ngIf="mode=='list'">
-    <i class="fas fa-plus-circle"></i>
-    NOVA TAREFA
-</button>
-<button class="add-button anitamed fadeInUp button" (click)="changeMode('list')" *ngIf="mode=='add'">
+<button [routerLink]="['/list-tasks']" class="add-button anitamed fadeInUp button">
     <i class="fas fa-times"></i>
     CANCELAR
 </button>

@@ -1,6 +1,8 @@
+import { TasksComponent } from '../tasks/tasks/tasks.component';
 import { NgModule } from '@angular/core';
 import { InitialPageComponent } from './initial-page/initial-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ListTasksComponent } from '../tasks/list-tasks/list-tasks.component';
 
 const routes: Routes = [
     {
@@ -8,8 +10,16 @@ const routes: Routes = [
         children: [
             {
                 path: 'tasks',
-                loadChildren: () => import('../tasks/tasks.module').then(m => m.TasksModule)
-            }
+                component: TasksComponent
+            },
+            {
+                path: 'list-tasks',
+                component: ListTasksComponent
+            },
+            {
+                path: '**',
+                redirectTo: 'list-tasks'
+            },
         ]
     }
 ];
