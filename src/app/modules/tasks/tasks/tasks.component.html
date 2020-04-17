@@ -1,15 +1,20 @@
-<div id="modal" class="animated flipInX">
-    <form [formGroup]= "form" (ngSubmit)="save()">
-        <input type="text" placeholder="Descrição da tarefa" maxlength="60" formControlName="task">
-        <small class="danger" *ngIf="form.controls.task.invalid && !form.controls.task.pristine">
-            Este campo deve conter entre 3 e 60 caracteres
-        </small>
-        <p class="text-center">
-            <button type="submit" [disabled]="form.invalid" class="button" ><i class="far fa-save"></i> Salvar</button>
-    </form>
-</div>
+<div class="container">
+    <h1 class="title animated jackInTheBox">{{ title }}</h1>
+    <div id="modal" class="animated flipInX">
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <input type="text" class="form-control" placeholder="Descrição da tarefa" maxlength="60"
+                formControlName="task">
+            <small class="danger" *ngIf="form.controls.task.invalid && !form.controls.task.pristine">
+                Este campo deve conter entre 3 e 60 caracteres
+            </small>
+            <p class="text-center">
+                <button type="submit" [disabled]="form.invalid" class="button"><i class="far fa-save"></i>
+                    Salvar</button>
+        </form>
+    </div>
 
-<button [routerLink]="['/list-tasks']" class="add-button anitamed fadeInUp button">
-    <i class="fas fa-times"></i>
-    CANCELAR
-</button>
+    <button routerLink="/list-tasks" class="add-button anitamed fadeInUp button">
+        <i class="fas fa-times"></i>
+        CANCELAR
+    </button>
+</div>

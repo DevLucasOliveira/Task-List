@@ -20,7 +20,7 @@ export class TaskService {
         return this.http.get<Task>(this.API_URL + '/Tasks/' + id);
     }
     createTask(task: Task): Observable<Task> {
-        return this.http.post<Task>(this.API_URL + '/Task' , task);
+        return this.http.post<Task>(this.API_URL + '/Tasks' , task);
     }
     updateTask(task: Task): Observable<Task> {
         return this.http.put<Task>(this.API_URL + '/Tasks', task);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Task } from 'src/app/shared/models/task.model';
 import { TaskService } from 'src/app/shared/providers';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -10,26 +11,20 @@ import { TaskService } from 'src/app/shared/providers';
 })
 export class TasksComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private taskService: TaskService) { }
+  constructor(private fb: FormBuilder,
+              private taskService: TaskService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { }
 
   form: FormGroup;
-  public mode = 'list';
   tasks: Task[];
-  task: Task;
+  public task: Task;
   public title = 'Lista de Tarefas';
 
 
   ngOnInit() {
-    this.getTask();
+    this.buildForm();
   }
-
-  private getTask() {
-    this.taskService.getTask().subscribe(
-      response => {
-        this.tasks = response;
-      });
-  }
-
 
   buildForm() {
     this.form = this.fb.group({
@@ -52,9 +47,10 @@ export class TasksComponent implements OnInit {
 
   save() {
     this.fillTask();
+    console.log(this.task);
     this.taskService.createTask(this.task).subscribe(
       response => {
-        this.getTask();
+        this.router.navigate(['/list-tasks']);
       },
       error => {
         console.error(error);
@@ -62,35 +58,10 @@ export class TasksComponent implements OnInit {
   }
 
   fillTask() {
-    if (this.task === undefined) {
-       //this.task = new Task();
-    }
-    this.task.task = this.form.controls.task.value;
-    this.task.done = this.form.controls.done.value;
+    let task = this.form.controls.task.value;
+    let done = this.form.controls.done.value;
+    this.task = new Task(task, done);
   }
 
-
-  add() {
-    this.save();
-    this.clear();
-  }
-
-  clear() {
-    this.form.reset();
-  }
-
-  markAsDone(todo: Task) {
-    todo.done = true;
-    this.save();
-  }
-
-  markAsUndone(todo: Task) {
-    todo.done = false;
-    this.save();
-  }
-
-  changeMode(mode: string) {
-    this.mode = mode;
-  }
 
 }
