@@ -13,7 +13,7 @@ import { ListTasksComponent } from './list-tasks/list-tasks.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    TasksRoutingModule
+    TasksRoutingModule,
   ]
 })
 export class TasksModule { }

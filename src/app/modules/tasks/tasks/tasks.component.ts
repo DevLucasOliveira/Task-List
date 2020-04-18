@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Task } from 'src/app/shared/models/task.model';
 import { TaskService } from 'src/app/shared/providers';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tasks',
@@ -14,7 +15,7 @@ export class TasksComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private taskService: TaskService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private toastr: ToastrService) { }
 
   form: FormGroup;
   tasks: Task[];
@@ -51,9 +52,11 @@ export class TasksComponent implements OnInit {
     this.taskService.createTask(this.task).subscribe(
       response => {
         this.router.navigate(['/list-tasks']);
+        this.toastr.success('Tarefa registrada', 'Sucesso');
       },
       error => {
         console.error(error);
+        this.toastr.error('Contate o administrador', 'Erro');
       });
   }
 
