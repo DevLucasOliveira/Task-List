@@ -1,20 +1,13 @@
-# Task List
+# Lista de Tarefas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.6.
- 
- 
- 
-### You can end or remove your tasks using the icons:
 
-![toto](https://user-images.githubusercontent.com/47563193/76020067-8473a980-5f01-11ea-8e86-a318b379efcc.png)     
-
+Nesta aplicação é possível registrar uma nova tarefa, e também deletar ou marcar como concluída usando os ícones.
+  
+    
+#### Veja o exemplo abaixo :
 
   
-### Below is the screen for registering the new task:
-
-![todolist](https://user-images.githubusercontent.com/47563193/76020262-d61c3400-5f01-11ea-93ff-d235ef9caec8.png)  
+![image](https://user-images.githubusercontent.com/47563193/79702895-7a71f400-827e-11ea-9e94-784da0bdc173.png)
 
 
-
-###### Application developed in Angular.
-
+###### Este projeto foi desenvolvido com [Angular CLI](https://github.com/angular/angular-cli) versão 8.3.6.  
