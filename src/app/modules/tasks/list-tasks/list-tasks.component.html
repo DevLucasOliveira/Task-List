@@ -6,7 +6,6 @@
         </p>
         <li *ngFor="let task of tasks">
             {{ task.task }}
-            {{ task.done }}
             <button (click)="remove(task)"><i class="far fa-trash-alt"></i></button>
             <button *ngIf="!task.done" (click)="markAsDone(task)"><i class="far fa-check-circle"></i></button>
             <button *ngIf="task.done" (click)="markAsUndone(task)"><i class="fas fa-check-circle"></i></button>

@@ -35,16 +35,8 @@ export class TasksComponent implements OnInit {
         Validators.required
       ])],
       done: [false]
-    });
+   });
   }
-
-  loadForm(task: Task) {
-    this.form.patchValue({
-      task: task.task,
-      done: task.done
-    });
-  }
-
 
   save() {
     this.fillTask();
