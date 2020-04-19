@@ -12,10 +12,9 @@ export class ListTasksComponent implements OnInit {
 
   constructor(private taskService: TaskService, private toastr: ToastrService) { }
 
-  public mode = 'list';
   tasks: Task[];
   task: Task;
-  public title = 'Lista de Tarefas';
+  public title = 'Tarefas';
 
 
   ngOnInit() {
@@ -42,17 +41,39 @@ export class ListTasksComponent implements OnInit {
   }
 
 
-  markAsDone(todo: Task) {
-    todo.done = true;
+  markAsDone(task: Task) {
+    task.done = true;
+    this.upload(task);
   }
 
-  markAsUndone(todo: Task) {
-    todo.done = false;
+  markAsUndone(task: Task) {
+    task.done = false;
+    this.upload(task);
   }
 
-  changeMode(mode: string) {
-    this.mode = mode;
+  upload(task: Task) {
+    console.log(task);
+    if (task.done === true) {
+      this.taskService.updateTask(task).subscribe(
+        response => {
+          this.toastr.success('Tarefa concluída', 'Sucesso');
+        },
+        error => {
+          console.error(error);
+          this.toastr.error('Contate o administrador', 'Erro');
+        });
+    } else {
+      this.taskService.updateTask(task).subscribe(
+        response => {
+          this.toastr.info('Tarefa não concluída', 'Atenção');
+        },
+        error => {
+          console.error(error);
+          this.toastr.error('Contate o administrador', 'Erro');
+        });
+    }
   }
+
 
 }
 

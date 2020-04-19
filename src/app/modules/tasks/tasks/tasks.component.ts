@@ -20,7 +20,7 @@ export class TasksComponent implements OnInit {
   form: FormGroup;
   tasks: Task[];
   public task: Task;
-  public title = 'Lista de Tarefas';
+  public title = 'Tarefas';
 
 
   ngOnInit() {
