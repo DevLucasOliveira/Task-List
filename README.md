@@ -1,7 +1,7 @@
 # Lista de Tarefas
 
 
-Nesta aplicação é possível registrar uma nova tarefa, e também deletar ou marcar como concluída usando os ícones.
+Nesta aplicação é possível registrar uma nova tarefa, deletar ou marcar como concluída usando os ícones.
   
     
 #### Veja o exemplo abaixo :
